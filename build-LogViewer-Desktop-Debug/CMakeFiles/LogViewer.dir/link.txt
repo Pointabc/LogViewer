@@ -1,0 +1,1 @@
+/usr/bin/g++ -g CMakeFiles/LogViewer.dir/main.cpp.o CMakeFiles/LogViewer.dir/date.cpp.o CMakeFiles/LogViewer.dir/time.cpp.o CMakeFiles/LogViewer.dir/console.cpp.o CMakeFiles/LogViewer.dir/window.cpp.o -o LogViewer  -lncurses 
