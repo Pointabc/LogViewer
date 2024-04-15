@@ -5,9 +5,10 @@
 #include <vector>
 #include <fstream>
 #include <string>
-#include "../include/structures.h"
+#include <structures.h>
+#include <windowbase.h>
 
-class Window
+class Window : public WindowBase
 {
 private:
 
@@ -15,12 +16,13 @@ protected:
     WINDOW* _window;
     rect _rc;       // Position of window and height and width
     std::vector<std::string> _data;
+    bool _border;
 
 public:
     Window();
     Window(const rect& rc);
     Window(const Window& wnd);
-    Window(int row, int col, int nrows, int ncols);
+    Window(int row, int col, int nrows, int ncols, bool border);
     void UpdateWindow();
     void WindowLoop();
     WINDOW* GetWindow();

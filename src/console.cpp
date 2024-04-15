@@ -28,6 +28,12 @@ void Console::start_ncurses(bool useRaw, bool useNoecho)
     // Hide cursor
     curs_set(0);
     cbreak();
+
+    // Set colors pair
+    start_color();
+    init_pair(1,COLOR_WHITE,COLOR_BLUE);
+    init_pair(2,COLOR_BLACK,COLOR_GREEN);
+
     // TODO Как узнать максимально возможные размеры терминала?
     //resizeterm()
 }

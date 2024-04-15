@@ -2,19 +2,19 @@
 #define STATUSBAR_H
 
 #include <ncurses.h>
-#include <WindowBase.h>
-#include "../include/structures.h"
+#include <windowbase.h>
+#include <structures.h>
 
-class StatusBar : WindowBase
+class StatusBar : public WindowBase
 {
     public:
         StatusBar();
         StatusBar(const rect& rc);
+        StatusBar(int row, int col, int nrows, int ncols, bool border);
         virtual ~StatusBar();
         void Draw();
 
     protected:
-        WINDOW* _window;
 
     private:
 };

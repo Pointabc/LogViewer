@@ -2,17 +2,14 @@
 
 Menu::Menu()
 {
-    //menu->rc
-    //menuwnd = newwin(row, col, nrows, ncols);
 }
 
 Menu::Menu(rect& rc)
 {
-    int height = 3;
+    int height = 1;
     start_color();
-    init_pair(1,COLOR_WHITE,COLOR_BLUE);
     _window = newwin(height, rc.col, rc.row, rc.col);
-    wbkgd(_window,COLOR_PAIR(1));
+    wbkgd(_window,COLOR_PAIR(2));
     keypad(_window, true);
     _is_active = true;
 }
@@ -30,11 +27,12 @@ void Menu::WindowLoop()
 
     //while(1) {
         int position = 1;
+        int row = 0;
         for (int i = 0; i < 3; ++i) {
             if (i == highlight) {
                 wattron(_window, A_REVERSE);
             }
-            mvwprintw(_window, 1, position, choices[i].c_str());
+            mvwprintw(_window, row, position, choices[i].c_str());
             position += choices[i].length() + 1;
             wattroff(_window, A_REVERSE);
         }
