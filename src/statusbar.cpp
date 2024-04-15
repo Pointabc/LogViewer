@@ -1,4 +1,5 @@
 #include "statusbar.h"
+#include <string>
 
 StatusBar::StatusBar()
 {
@@ -39,6 +40,6 @@ void StatusBar::Draw()
     getmaxyx(stdscr, height, width);
     mvwin(_window, height - 1, 0); //
 
-    mvwprintw(_window, 0, 0, "Information.");
+    mvwprintw(_window, 0, 0, std::to_string(width).c_str());
 }
 

@@ -33,7 +33,7 @@ Window::Window(int row, int col, int nrows, int ncols, bool border)
     }
     keypad(_window, true); // makes it so we can use arrow keys, F1-F12 etc.
 
-    _is_active = false;
+    active = false;
 }
 
 void Window::UpdateWindow()
@@ -57,6 +57,8 @@ void Window::Reset()
 void Window::OpenFile(std::string path)
 {
     std::string line;
+    position = 0;
+    highlight = 0;
 
     std::ifstream in(path); // окрываем файл для чтения
     if (in.is_open())
@@ -71,39 +73,58 @@ void Window::OpenFile(std::string path)
 
 void Window::Draw()
 {
-    int row, col, height, width;
-    //getyx(_window, row, col);
+    int height, width;
     getmaxyx(stdscr, height, width);
-    //int i = wresize(_window, height - 2, width);
 
     int max_width = width - 2;
     int max_height = height - 2;
 
     for(size_t i = 0; i < max_height - 2; ++i) {
-        std::string s = _data[i].substr(0, max_width);
+        std::string s = _data[i + position].substr(0, max_width);
+        int ss = _data[i + position].size();
+        if (s.size() < max_width) {
+            std::string spaces(max_width - s.size() + 1, ' ');
+            //std::string spaces(10, ' ');
+            s.insert(s.size() - 1, spaces);
+        }
+        if (highlight == i) {
+            wattron(_window, A_REVERSE);
+        }
         mvwprintw(_window, i + 1, 1, s.c_str());
+        wattroff(_window, A_REVERSE);
     }
 }
 
-void Window::WindowLoop()
+void Window::WindowLoop(int choice)
 {
-    while(1) {
-        int choice = wgetch(_window);
-        switch(choice) {
-            case KEY_DOWN:
-                //highlight--;
-                break;
-            case KEY_UP:
-                //highlight++;
-                break;
-            default:
-                break;
-        }
+    if (_data.empty()) {
+        return;
+    }
 
-        if (choice == 27) {
+    int height, width, max_height;
+
+    switch(choice) {
+        case KEY_DOWN:
+            getmaxyx(stdscr, height, width);
+            max_height = height - 5;
+            highlight++;
+            if (highlight > max_height && highlight < _data.size()) {
+                highlight = max_height;
+                ++position;
+            }
+            break;
+        case KEY_UP:
+            --highlight;
+            if (highlight < 0) {
+                highlight = 0;
+                if (position > 0) {
+                    --position;
+                }
+            }
+            break;
+        default:
             break;
         }
-    }
 }
 
 WINDOW* Window::GetWindow()
@@ -113,5 +134,10 @@ WINDOW* Window::GetWindow()
 
 bool Window::GetActive()
 {
-    return _is_active;
+    return active;
+}
+
+void Window::SetActive(bool active)
+{
+    this->active = active;
 }

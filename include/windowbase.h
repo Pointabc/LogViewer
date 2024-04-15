@@ -15,6 +15,9 @@ class WindowBase
         void Reset();
         void Draw();
 
+        // Data
+        bool active;
+
     protected:
         WINDOW* _window;
         rect _rc;       // Position of window and height and width

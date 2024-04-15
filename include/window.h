@@ -24,15 +24,19 @@ public:
     Window(const Window& wnd);
     Window(int row, int col, int nrows, int ncols, bool border);
     void UpdateWindow();
-    void WindowLoop();
+    void WindowLoop(int choice);
     WINDOW* GetWindow();
     bool GetActive();
+    void SetActive(bool active);
     void Reset();
     void Draw();
     void OpenFile(std::string path);
 
+
     // Data
-    bool _is_active;
+    bool active;
+    int highlight;
+    int position;   // row of log file
 };
 
 #endif // WINDOW_H

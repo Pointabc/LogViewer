@@ -10,6 +10,8 @@
 
 using namespace std;
 
+#define ctrl(x) ((x) & 0x1f)
+
 int main() {
     Console con;
     rect rc = con.GetWindowRect();
@@ -40,21 +42,41 @@ int main() {
     // Loop of main menu
     while(1) {
         refresh();
+        menu.Reset();
+        menu.Draw();
         statuswnd.Reset();
         statuswnd.Draw();
         workwnd.Reset();
         workwnd.Draw();
         wrefresh(workwnd.GetWindow());
         wrefresh(statuswnd.GetWindow());
+        wrefresh(menu.GetWindow());
 
-        if (menu.GetActive()) {
-            menu.WindowLoop();
+        if (workwnd.active) {
+            choice = wgetch(workwnd.GetWindow());
+        }
+        else if (menu.active) {
+            choice = wgetch(menu.GetWindow());
+        }
+
+        if (menu.active) {
+            menu.WindowLoop(choice);
+            workwnd.active = true;
             continue;
         }
 
-        choice = wgetch(workwnd.GetWindow());
+        if(workwnd.active) {
+            workwnd.WindowLoop(choice);
+        }
 
-        if (choice == 27) {
+        //choice = wgetch(workwnd.GetWindow());
+        if (choice == ctrl('a')) {
+            menu.active = true;
+            workwnd.active = false;
+            continue;
+        }
+
+        if (choice == ctrl('x')) {
             break;
         }
         // Open selectrd menu
@@ -63,21 +85,8 @@ int main() {
         }
     }
 
-    //int c = wgetch(wnd);
-    /*if (c == 'q') {
-        mvwprintw(wnd, 2, 1, "You pressed q");
-        wrefresh(wnd);
-    }*/
-    //mvwprintw(wnd, 1, 1, "Hello world!");
-    //wrefresh(wnd);
-
-    //move(2, 10);
-    //printw("NCurses");
-    //refresh();
-
-    getch();
+    //getch();
     endwin();
-    //delete con;
     return 0;
 }
 

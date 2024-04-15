@@ -11,7 +11,7 @@ Menu::Menu(rect& rc)
     _window = newwin(height, rc.col, rc.row, rc.col);
     wbkgd(_window,COLOR_PAIR(2));
     keypad(_window, true);
-    _is_active = true;
+    active = true;
 }
 
 Menu::~Menu()
@@ -19,14 +19,18 @@ Menu::~Menu()
     //dtor
 }
 
-void Menu::WindowLoop()
+void Menu::WindowLoop(int choice)
 {
-    if (!_is_active) {
+    /*if (!active) {
         return;
+    }*/
+    if (highlight == -1) {
+        highlight = 0;
     }
-
+    Reset();
+    this->Draw();
     //while(1) {
-        int position = 1;
+        /*int position = 1;
         int row = 0;
         for (int i = 0; i < 3; ++i) {
             if (i == highlight) {
@@ -35,8 +39,8 @@ void Menu::WindowLoop()
             mvwprintw(_window, row, position, choices[i].c_str());
             position += choices[i].length() + 1;
             wattroff(_window, A_REVERSE);
-        }
-        choice = wgetch(_window);
+        }*/
+        //choice = wgetch(_window);
 
         switch(choice) {
             case KEY_LEFT:
@@ -54,7 +58,10 @@ void Menu::WindowLoop()
             highlight = 2;
         }
         if (choice == 27) {
-            _is_active = false;
+            active = false;
+            highlight = -1;
+            Reset();
+            this->Draw();
             //break;
         }
         // Open selectrd menu
@@ -67,7 +74,6 @@ void Menu::WindowLoop()
                         rect rc{5, 15, 10, 20};
                         Submenu submenu = Submenu(rc);
                         submenu.WindowLoop();
-
                     }
                     break;
                 case 1:
@@ -83,4 +89,18 @@ void Menu::WindowLoop()
         refresh();
         wrefresh(_window);
     //}
+}
+
+void Menu::Draw()
+{
+    int position = 1;
+    int row = 0;
+    for (int i = 0; i < 3; ++i) {
+        if (i == highlight) {
+            wattron(_window, A_REVERSE);
+        }
+        mvwprintw(_window, row, position, choices[i].c_str());
+        position += choices[i].length() + 1;
+        wattroff(_window, A_REVERSE);
+    }
 }

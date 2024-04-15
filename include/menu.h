@@ -5,14 +5,15 @@
 #include "submenu.h"
 #include <string>
 
-class Menu : public Window
+class Menu : public WindowBase
 {
     public:
         Menu();
         Menu(rect& rc);
         virtual ~Menu();
 
-        void WindowLoop();
+        void WindowLoop(int choice);
+        void Draw();
     protected:
 
     private:
