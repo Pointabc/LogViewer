@@ -14,12 +14,14 @@ class Menu : public WindowBase
 
         void WindowLoop(int choice);
         void Draw();
+
+        int highlight = 0;
+        Window* workwnd;
     protected:
 
     private:
         std::string choices[3] = {"File...", "Level", "?"};
         int choice;
-        int highlight = 0;
 };
 
 #endif // MENU_H

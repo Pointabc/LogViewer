@@ -1,4 +1,4 @@
-#include "../include/window.h"
+#include <window.h>
 
 Window::Window()
 {
@@ -73,18 +73,22 @@ void Window::OpenFile(std::string path)
 
 void Window::Draw()
 {
+    this->Reset();
     int height, width;
     getmaxyx(stdscr, height, width);
 
     int max_width = width - 2;
     int max_height = height - 2;
 
+    if (_data.size() < max_height) {
+        max_height = _data.size();
+    }
+
     for(size_t i = 0; i < max_height - 2; ++i) {
         std::string s = _data[i + position].substr(0, max_width);
         int ss = _data[i + position].size();
         if (s.size() < max_width) {
             std::string spaces(max_width - s.size() + 1, ' ');
-            //std::string spaces(10, ' ');
             s.insert(s.size() - 1, spaces);
         }
         if (highlight == i) {
@@ -106,7 +110,13 @@ void Window::WindowLoop(int choice)
     switch(choice) {
         case KEY_DOWN:
             getmaxyx(stdscr, height, width);
+
             max_height = height - 5;
+
+            //TODO
+            /*if (max_height > _data.size()) {
+                max_height = _data.size();
+            }*/
             highlight++;
             if (highlight > max_height && highlight < _data.size()) {
                 highlight = max_height;
@@ -124,7 +134,9 @@ void Window::WindowLoop(int choice)
             break;
         default:
             break;
-        }
+    }
+    this->Reset();
+    this->Draw();
 }
 
 WINDOW* Window::GetWindow()

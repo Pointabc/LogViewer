@@ -25,9 +25,10 @@ class Console
         void AddWindow(WINDOW* window);
         void UpdateWindows();
         WINDOW* GetActiveWindow();
+        void UpdateRect(const rect& rc);
 
     protected:
-        rect rc;
+        rect _rc;
         std::vector<WINDOW*> _windows;
     private:
 };

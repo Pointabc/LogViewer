@@ -1,5 +1,5 @@
 #include <ncurses.h>
-#include "../include/console.h"
+#include <console.h>
 
 Console::Console()
 {
@@ -22,8 +22,9 @@ void Console::start_ncurses(bool useRaw, bool useNoecho)
     }
 
     // Get rect of console
-    getyx(stdscr, rc.row, rc.col);
-    getmaxyx(stdscr, rc.nrows, rc.ncols);
+    getyx(stdscr, _rc.row, _rc.col);
+    getmaxyx(stdscr, _rc.nrows, _rc.ncols);
+
 
     // Hide cursor
     curs_set(0);
@@ -35,12 +36,11 @@ void Console::start_ncurses(bool useRaw, bool useNoecho)
     init_pair(2,COLOR_BLACK,COLOR_GREEN);
 
     // TODO Как узнать максимально возможные размеры терминала?
-    //resizeterm()
 }
 
 rect& Console::GetWindowRect()
 {
-    return rc;
+    return _rc;
 }
 
 void Console::AddWindow(WINDOW* window)
@@ -63,4 +63,19 @@ void Console::UpdateWindows()
 WINDOW* Console::GetActiveWindow()
 {
     return NULL;
+}
+
+int Console::GetHeight() const
+{
+    return _rc.nrows;
+}
+
+int Console::GetWidth() const
+{
+    return _rc.ncols;
+}
+
+void Console::UpdateRect(const rect& rc)
+{
+    _rc = rc;
 }

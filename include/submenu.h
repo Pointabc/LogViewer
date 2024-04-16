@@ -4,7 +4,7 @@
 #include "window.h"
 #include "string"
 
-class Submenu : Window
+class Submenu : WindowBase
 {
     public:
         Submenu();
