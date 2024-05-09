@@ -9,12 +9,9 @@ WindowBase::WindowBase(int row, int col, int nrows, int ncols, bool border)
 {
     start_color();
     init_pair(1,COLOR_WHITE,COLOR_BLUE);
-    _window = newwin(row, col, nrows, ncols);
+    _window = newwin(nrows, ncols, row, col);
     wbkgd(_window,COLOR_PAIR(1));
-    _rc.row = row;
-    _rc.col = col;
-    _rc.nrows = nrows;
-    _rc.ncols = ncols;
+    _rc = {row, col, nrows, ncols};
     _border = border;
     if (border) {
         box(_window, 0, 0);

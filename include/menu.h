@@ -8,7 +8,6 @@
 class Menu : public WindowBase
 {
     public:
-        Menu();
         Menu(rect& rc);
         virtual ~Menu();
 

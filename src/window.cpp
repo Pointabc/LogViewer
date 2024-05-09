@@ -8,7 +8,7 @@ Window::Window()
 Window::Window(const rect& rc)
 {
     _rc = rc;
-    _window = newwin(rc.nrows, rc.col, rc.row, rc.col);
+    _window = newwin(rc.nrows, rc.ncols, rc.row, rc.col);
     keypad(_window, true);
 }
 
@@ -21,12 +21,9 @@ Window::Window(int row, int col, int nrows, int ncols, bool border)
 {
     start_color();
     init_pair(1,COLOR_WHITE,COLOR_BLUE);
-    _window = newwin(row, col, nrows, ncols);
+    _window = newwin(nrows, ncols, row, col);
     wbkgd(_window,COLOR_PAIR(1));
-    _rc.row = row;
-    _rc.col = col;
-    _rc.nrows = nrows;
-    _rc.ncols = ncols;
+    _rc = {row, col, nrows, ncols};
 
     if (border) {
         box(_window, 0, 0);
@@ -113,7 +110,8 @@ void Window::WindowLoop(int choice)
 
             max_height = height - 5;
 
-            //TODO
+            //TODO Для файлов содержащих меньше строк чем в консоле
+            //TODO вылетает если нажать вниз на последней строке
             /*if (max_height > _data.size()) {
                 max_height = _data.size();
             }*/

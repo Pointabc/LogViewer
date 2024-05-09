@@ -1,14 +1,10 @@
 #include "menu.h"
 
-Menu::Menu()
-{
-}
-
 Menu::Menu(rect& rc)
 {
     int height = 1;
     start_color();
-    _window = newwin(height, rc.col, rc.row, rc.col);
+    _window = newwin(height, rc.ncols, rc.row, rc.col);
     wbkgd(_window,COLOR_PAIR(2));
     keypad(_window, true);
     active = true;
@@ -70,6 +66,7 @@ void Menu::WindowLoop(int choice)
 
 void Menu::Draw()
 {
+    Reset();
     int position = 1;
     int row = 0;
     for (int i = 0; i < 3; ++i) {

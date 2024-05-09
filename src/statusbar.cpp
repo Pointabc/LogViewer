@@ -36,6 +36,7 @@ StatusBar::StatusBar(const rect& rc)
 
 void StatusBar::Draw()
 {
+    Reset();
     int height, width;
     getmaxyx(stdscr, height, width);
     mvwin(_window, height - 1, 0); //

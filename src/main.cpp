@@ -28,20 +28,23 @@ int main() {
     int choice = 0;
 
     //Window of work
-    Window workwnd(rc.nrows - 2, rc.ncols, 1, 0, true);
+    //Window workwnd(rc.nrows - 2, rc.ncols, 1, 0, true);
+    Window workwnd(1, 0, rc.nrows - 2, rc.ncols, true);
+    //Window workwnd(1, 0, rc.nrows - 2, rc.ncols, true);
     menu.workwnd = &workwnd; // for update when work with menu
-    box(workwnd.GetWindow(), 0, 0);
-    keypad(workwnd.GetWindow(), true);
+    //box(workwnd.GetWindow(), 0, 0);
+    //keypad(workwnd.GetWindow(), true);
     //workwnd.OpenFile("/home/oem/Projects/LogViewer/WIN-M1EHONCMIR3.WebServer.2024-04-14.log");
     workwnd.OpenFile("/home/oem/Projects/LogViewer/ntegrationService.CacheManager.2023-08-14.log");
     con.AddWindow(workwnd.GetWindow());
 
     // Update windows
     refresh();
-    menu.Reset();
+    //menu.Reset();
     menu.Draw();
-    statuswnd.Reset();
+    //statuswnd.Reset();
     statuswnd.Draw();
+    workwnd.Draw();
 
     workwnd.Draw();
     wrefresh(menu.GetWindow());

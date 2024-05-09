@@ -2,7 +2,7 @@
 #define WINDOWBASE_H
 
 #include <ncurses.h>
-#include "../include/structures.h"
+#include <structures.h>
 
 class WindowBase
 {
