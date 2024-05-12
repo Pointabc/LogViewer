@@ -50,7 +50,6 @@ void Window::OpenFile(std::string path)
         }
     }
     in.close();     // закрываем файл
-    //Draw();
 }
 
 void Window::Draw()
@@ -62,22 +61,29 @@ void Window::Draw()
     int max_width = width - 2;
     int max_height = height - 2;
 
-    if (_data.size() < max_height) {
-        max_height = _data.size();
-    }
+    /*if (!_data.empty() && _data.size() > position) {
+        //max_height = _data.size();
+        --position;
+    }*/
 
     for(size_t i = 0; i < max_height - 2; ++i) {
-        std::string s = _data[i + position].substr(0, max_width);
-        int ss = _data[i + position].size();
-        if (s.size() < max_width) {
-            std::string spaces(max_width - s.size() + 1, ' ');
-            s.insert(s.size() - 1, spaces);
+        std::string empty_string(max_width, ' ');
+        if (_data.size() < max_height && i > _data.size() - 1) {
+            mvwprintw(_window, i + 1, 1, empty_string.c_str());
         }
-        if (highlight == i) {
-            wattron(_window, A_REVERSE);
+        else {
+            std::string s = _data[i + position].substr(0, max_width);
+            int ss = _data[i + position].size();
+            if (s.size() < max_width) {
+                std::string spaces(max_width - s.size() + 1, ' ');
+                s.insert(s.size() - 1, spaces);
+            }
+            if (highlight == i) {
+                wattron(_window, A_REVERSE);
+            }
+            mvwprintw(_window, i + 1, 1, s.c_str());
+            wattroff(_window, A_REVERSE);
         }
-        mvwprintw(_window, i + 1, 1, s.c_str());
-        wattroff(_window, A_REVERSE);
     }
 }
 
@@ -92,16 +98,18 @@ void Window::WindowLoop(int choice)
     switch(choice) {
         case KEY_DOWN:
             getmaxyx(stdscr, height, width);
-
             max_height = height - 5;
 
-            //TODO Для файлов содержащих меньше строк чем в консоле
-            //TODO вылетает если нажать вниз на последней строке
-            /*if (max_height > _data.size()) {
-                max_height = _data.size();
-            }*/
+            if (position == _data.size() - 3)
+            {
+                int a = 5;
+            }
+
             highlight++;
-            if (highlight > max_height && highlight < _data.size()) {
+            if (highlight > _data.size() - 1) {
+                highlight = _data.size() - 1;
+            }
+            else if (highlight > max_height && highlight < _data.size()) {
                 highlight = max_height;
                 ++position;
             }

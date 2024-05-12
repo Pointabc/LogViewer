@@ -32,7 +32,8 @@ int main() {
     //Window workwnd(1, 0, rc.nrows - 2, rc.ncols, true);
     menu.workwnd = &workwnd; // for update when work with menu
     //workwnd.OpenFile("/home/oem/Projects/LogViewer/WIN-M1EHONCMIR3.WebServer.2024-04-14.log");
-    workwnd.OpenFile("/home/oem/Projects/LogViewer/ntegrationService.CacheManager.2023-08-14.log");
+    //workwnd.OpenFile("/home/oem/Projects/LogViewer/ntegrationService.CacheManager.2023-08-14.log");
+    workwnd.OpenFile("/home/oem/Projects/LogViewer/p-syngenta-rx-sungerowebserver.WebServer.CacheManager.2023-08-14.log");
     con.AddWindow(workwnd.GetWindow());
 
     // Update windows

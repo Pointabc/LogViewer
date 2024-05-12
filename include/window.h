@@ -37,7 +37,7 @@ public:
     // Data
     bool active;
     int highlight;
-    int position;   // row of log file
+    int position = 0;   // row of log file
 };
 
 #endif // WINDOW_H
