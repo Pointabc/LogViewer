@@ -60,8 +60,7 @@ void Menu::WindowLoop(int choice)
                 break;
         }
     }
-    Reset();
-    this->Draw();
+    Draw();
 }
 
 void Menu::Draw()

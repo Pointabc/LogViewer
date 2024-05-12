@@ -13,21 +13,20 @@ class Window : public WindowBase
 private:
 
 protected:
-    WINDOW* _window;
-    rect _rc;       // Position of window and height and width
+    //WINDOW* _window;
+    //rect _rc;       // Position of window and height and width
     std::vector<std::string> _data;
-    bool _border;
+    //bool _border;
 
 public:
     //using WindowBase::WindowBase;
     Window();
     Window(const rect& rc);
     Window(const Window& wnd);
-    Window(int row, int col, int nrows, int ncols, bool border);
-    //Window(int row, int col, int nrows, int ncols, bool border) : WindowBase(row, col, nrows, ncols, border) {};
+    //Window(int row, int col, int nrows, int ncols, bool border);
+    Window(int row, int col, int nrows, int ncols, bool border) : WindowBase(row, col, nrows, ncols, border) {}
     void UpdateWindow();
     void WindowLoop(int choice);
-    WINDOW* GetWindow();
     bool GetActive();
     void SetActive(bool active);
     void Reset();

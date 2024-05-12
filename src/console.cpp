@@ -31,9 +31,11 @@ void Console::start_ncurses(bool useRaw, bool useNoecho)
     cbreak();
 
     // Set colors pair
-    start_color();
-    init_pair(1,COLOR_WHITE,COLOR_BLUE);
-    init_pair(2,COLOR_BLACK,COLOR_GREEN);
+    if (has_colors()) {
+        start_color();
+        init_pair(1,COLOR_WHITE,COLOR_BLUE);
+        init_pair(2,COLOR_BLACK,COLOR_GREEN);
+    }
 
     // TODO Как узнать максимально возможные размеры терминала?
 }

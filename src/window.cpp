@@ -17,22 +17,6 @@ Window::Window(const Window& wnd) {
     _rc = wnd._rc;  // инициализируем поле rc значением из объекта-образца
 }
 
-Window::Window(int row, int col, int nrows, int ncols, bool border)
-{
-    start_color();
-    init_pair(1,COLOR_WHITE,COLOR_BLUE);
-    _window = newwin(nrows, ncols, row, col);
-    wbkgd(_window,COLOR_PAIR(1));
-    _rc = {row, col, nrows, ncols};
-
-    if (border) {
-        box(_window, 0, 0);
-    }
-    keypad(_window, true); // makes it so we can use arrow keys, F1-F12 etc.
-
-    active = false;
-}
-
 void Window::UpdateWindow()
 {
     refresh();
@@ -66,6 +50,7 @@ void Window::OpenFile(std::string path)
         }
     }
     in.close();     // закрываем файл
+    //Draw();
 }
 
 void Window::Draw()
@@ -135,11 +120,6 @@ void Window::WindowLoop(int choice)
     }
     this->Reset();
     this->Draw();
-}
-
-WINDOW* Window::GetWindow()
-{
-    return _window;
 }
 
 bool Window::GetActive()

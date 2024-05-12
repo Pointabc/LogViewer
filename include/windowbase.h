@@ -6,14 +6,15 @@
 
 class WindowBase
 {
+    private:
     public:
-        WindowBase();
+        WindowBase() {};
         WindowBase(int row, int col, int nrows, int ncols, bool border);
         virtual ~WindowBase();
 
         WINDOW* GetWindow();
         void Reset();
-        void Draw();
+        virtual void Draw() {};
 
         // Data
         bool active;
@@ -22,8 +23,6 @@ class WindowBase
         WINDOW* _window;
         rect _rc;       // Position of window and height and width
         bool _border;
-    private:
-
 };
 
 #endif // WINDOWBASE_H
