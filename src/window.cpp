@@ -29,9 +29,9 @@ void Window::Reset()
     getmaxyx(stdscr, height, width);
     int i = wresize(_window, height - 2, width);
 
-    clearok(_window, true);
+    WindowBase::Reset();
+    //clearok(_window, true);
     wbkgd(_window,COLOR_PAIR(1));
-    box(_window, 0, 0);
     wrefresh(_window);
 }
 
@@ -61,11 +61,6 @@ void Window::Draw()
     int max_width = width - 2;
     int max_height = height - 2;
 
-    /*if (!_data.empty() && _data.size() > position) {
-        //max_height = _data.size();
-        --position;
-    }*/
-
     for(size_t i = 0; i < max_height - 2; ++i) {
         std::string empty_string(max_width, ' ');
         if (_data.size() < max_height && i > _data.size() - 1) {
@@ -75,8 +70,8 @@ void Window::Draw()
             std::string s = _data[i + position].substr(0, max_width);
             int ss = _data[i + position].size();
             if (s.size() < max_width) {
-                std::string spaces(max_width - s.size() + 1, ' ');
-                s.insert(s.size() - 1, spaces);
+                std::string spaces(max_width - s.size(), ' ');
+                s.insert(s.size(), spaces);
             }
             if (highlight == i) {
                 wattron(_window, A_REVERSE);
@@ -100,14 +95,9 @@ void Window::WindowLoop(int choice)
             getmaxyx(stdscr, height, width);
             max_height = height - 5;
 
-            if (position == _data.size() - 3)
-            {
-                int a = 5;
-            }
-
             highlight++;
-            if (highlight > _data.size() - 1) {
-                highlight = _data.size() - 1;
+            if (position + highlight > _data.size()) {
+                --highlight;
             }
             else if (highlight > max_height && highlight < _data.size()) {
                 highlight = max_height;
@@ -126,8 +116,7 @@ void Window::WindowLoop(int choice)
         default:
             break;
     }
-    this->Reset();
-    this->Draw();
+    Draw();
 }
 
 bool Window::GetActive()

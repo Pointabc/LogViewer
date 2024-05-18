@@ -38,16 +38,9 @@ int main() {
 
     // Update windows
     refresh();
-    //menu.Reset();
     menu.Draw();
-    //statuswnd.Reset();
     statuswnd.Draw();
     workwnd.Draw();
-
-    workwnd.Draw();
-    wrefresh(menu.GetWindow());
-    wrefresh(workwnd.GetWindow());
-    wrefresh(statuswnd.GetWindow());
 
     // Loop of main menu
     while(1) {
@@ -56,17 +49,17 @@ int main() {
         int height, width;
         getmaxyx(stdscr, height, width);
         rect rc = con.GetWindowRect();
+
+        //wrefresh(workwnd.GetWindow());
+        //wrefresh(statuswnd.GetWindow());
+        //wrefresh(menu.GetWindow());
+
         if (rc.ncols != width || rc.nrows != height) {
             refresh();
-            menu.Reset();
-            menu.Draw();
-            statuswnd.Reset();
-            statuswnd.Draw();
 
+            menu.Draw();
+            statuswnd.Draw();
             workwnd.Draw();
-            wrefresh(workwnd.GetWindow());
-            wrefresh(statuswnd.GetWindow());
-            wrefresh(menu.GetWindow());
 
             //update rect
             rect rc_new = {0, 0, height, width};
@@ -98,7 +91,6 @@ int main() {
             menu.active = true;
             menu.highlight = 0;
             workwnd.active = false;
-            menu.Reset();
             menu.Draw();
         }
 
