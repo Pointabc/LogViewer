@@ -5,12 +5,14 @@
 #include <vector>
 #include <fstream>
 #include <string>
-#include <structures.h>
-#include <windowbase.h>
+#include "structures.h"
+#include "windowbase.h"
+#include "menubar.h"
 
 class Window : public WindowBase
 {
 private:
+    Menubar* _menubar;
 
 protected:
     //WINDOW* _window;
@@ -30,9 +32,9 @@ public:
     void Reset();
     void Draw();
     void OpenFile(std::string path);
+    void SetMenuBar(Menubar* menubar);
 
     // Data
-    bool active;
     int highlight;
     int position = 0;   // row of log file
 };

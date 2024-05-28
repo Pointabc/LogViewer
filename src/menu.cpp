@@ -37,7 +37,7 @@ void Menu::WindowLoop(int choice)
         active = false;
         highlight = -1;
     }
-    // Open selectrd menu
+    // Open selected menu
     if (choice == 10) {
         // Open submenu
         switch(highlight) {

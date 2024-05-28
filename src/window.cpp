@@ -68,7 +68,6 @@ void Window::Draw()
         }
         else {
             std::string s = _data[i + position].substr(0, max_width);
-            int ss = _data[i + position].size();
             if (s.size() < max_width) {
                 std::string spaces(max_width - s.size(), ' ');
                 s.insert(s.size(), spaces);
@@ -79,6 +78,10 @@ void Window::Draw()
             mvwprintw(_window, i + 1, 1, s.c_str());
             wattroff(_window, A_REVERSE);
         }
+    }
+
+    if(_menubar != nullptr) {
+        _menubar->Draw();
     }
 }
 
@@ -127,4 +130,9 @@ bool Window::GetActive()
 void Window::SetActive(bool active)
 {
     this->active = active;
+}
+
+void Window::SetMenuBar(Menubar* menubar)
+{
+    _menubar = menubar;
 }

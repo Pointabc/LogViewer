@@ -4,6 +4,7 @@
 #include "window.h"
 #include "submenu.h"
 #include <string>
+#include <vector>
 
 class Menu : public WindowBase
 {
@@ -15,6 +16,8 @@ class Menu : public WindowBase
                 wbkgd(_window,COLOR_PAIR(2));
             }
             active = true;
+            // Создать подменю
+
         }
         virtual ~Menu();
 
@@ -24,8 +27,9 @@ class Menu : public WindowBase
         int highlight = 0;
         Window* workwnd;
     private:
-        std::string choices[3] = {"File...", "Level", "?"};
+        std::vector<std::string> choices {"File...", "Level", "?"};
         int choice;
+        //std::vector<Submenu*> submenu(choices.size());
 };
 
 #endif // MENU_H

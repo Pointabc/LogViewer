@@ -10,8 +10,11 @@ class Submenu : WindowBase
         Submenu();
         Submenu(rect& rc);
         virtual ~Submenu();
+
         void WindowLoop();
 
+        int num_submenues;
+        WINDOW* menu_wnd;
     protected:
 
     private:

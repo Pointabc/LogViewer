@@ -9,6 +9,7 @@ WindowBase::WindowBase(int row, int col, int nrows, int ncols, bool border)
         box(_window, 0, 0);
     }
     keypad(_window, true); // makes it so we can use arrow keys, F1-F12 etc.
+    active = false;
 }
 
 WindowBase::~WindowBase()
