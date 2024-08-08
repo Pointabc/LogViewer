@@ -9,7 +9,6 @@ Window::Window(const rect& rc)
 {
     _rc = rc;
     _window = newwin(rc.nrows, rc.ncols, rc.row, rc.col);
-    keypad(_window, true);
 }
 
 // Конструктор копирования
@@ -19,7 +18,6 @@ Window::Window(const Window& wnd) {
 
 void Window::UpdateWindow()
 {
-    refresh();
     wrefresh(_window);
 }
 
@@ -27,10 +25,12 @@ void Window::Reset()
 {
     int height, width;
     getmaxyx(stdscr, height, width);
-    int i = wresize(_window, height - 2, width);
 
-    WindowBase::Reset();
-    //clearok(_window, true);
+    if (_rc.ncols != width || _rc.nrows != height) {
+        wresize(_window, height - 2, width);
+    }
+
+    //WindowBase::Reset();
     wbkgd(_window,COLOR_PAIR(1));
     wrefresh(_window);
 }
@@ -49,12 +49,16 @@ void Window::OpenFile(std::string path)
             _data.push_back(line);
         }
     }
-    in.close();     // закрываем файл
+    in.close();
 }
 
 void Window::Draw()
 {
-    this->Reset();
+    /*if(_menubar != nullptr) {
+        _menubar->Draw();
+    }*/
+
+    //this->Reset();
     int height, width;
     getmaxyx(stdscr, height, width);
 
@@ -80,9 +84,7 @@ void Window::Draw()
         }
     }
 
-    if(_menubar != nullptr) {
-        _menubar->Draw();
-    }
+    wrefresh(_window);
 }
 
 void Window::WindowLoop(int choice)

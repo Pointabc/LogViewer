@@ -48,11 +48,11 @@ void Menubar::DrawMenu(MenuEx menu, bool is_selected)
     }
     mvwprintw(_window, 0, menu._start_x, menu._text.c_str());
     wattroff(_window, A_STANDOUT);
-    wrefresh(_window);
+    //wrefresh(_window);
 
     int ch;
     DrawMenuItems(menu);
-    wrefresh(_submenu);
+    //wrefresh(_submenu);
     while(is_selected && (ch = wgetch(_submenu))) {
         switch (ch) {
             case KEY_DOWN:
@@ -68,7 +68,7 @@ void Menubar::DrawMenu(MenuEx menu, bool is_selected)
     }
     werase(_submenu);
     wrefresh(_submenu);
-    Reset();
+    //Reset();
 }
 
 void Menubar::DrawMenuItems(MenuEx menu)

@@ -5,7 +5,6 @@
 #include <window.h>
 #include <structures.h>
 #include <menu.h>
-#include "menuex.h"
 #include "menubar.h"
 #include <statusbar.h>
 #include <windowbase.h>
@@ -25,13 +24,14 @@ int main() {
     int height = 1;
     // Create status window
     StatusBar statuswnd(height, rc.ncols, rc.nrows - 1, 0, false);
+    statuswnd.Draw();
     con.AddWindow(statuswnd.GetWindow());
 
     int choice = 0;
 
     //Window of work
     Window workwnd(1, 0, rc.nrows - 2, rc.ncols, true);
-    //menu.workwnd = &workwnd; // for update when work with menu
+    workwnd.active = true;
 
     // Menu items
     std::vector<std::string> menuFile = {"Open...", "Exit"}; //File
@@ -55,17 +55,12 @@ int main() {
     Menubar menubar(workwnd.GetWindow(), menus, menus.size());
     menubar.Draw();
 
-
     //workwnd.OpenFile("/home/oem/Projects/LogViewer/WIN-M1EHONCMIR3.WebServer.2024-04-14.log");
     //workwnd.OpenFile("/home/oem/Projects/LogViewer/ntegrationService.CacheManager.2023-08-14.log");
     workwnd.OpenFile("/home/oem/Projects/LogViewer/p-syngenta-rx-sungerowebserver.WebServer.CacheManager.2023-08-14.log");
     workwnd.SetMenuBar(&menubar);
+    workwnd.Draw();
     con.AddWindow(workwnd.GetWindow());
-
-    // Update windows
-    refresh();
-    //menu.Draw();
-    statuswnd.Draw();
 
     // Loop of main menu
     while(1) {
@@ -85,7 +80,7 @@ int main() {
             rect rc_new = {0, 0, height, width};
             con.UpdateRect(rc_new);
         }
-        wrefresh(workwnd.GetWindow());
+        //wrefresh(workwnd.GetWindow());
         wrefresh(statuswnd.GetWindow());
         //wrefresh(menu.GetWindow());
         //wrefresh(menu);
@@ -94,7 +89,11 @@ int main() {
             choice = wgetch(workwnd.GetWindow());
             menubar.handleTrigger(choice);
             menubar.Draw();
+            workwnd.WindowLoop(choice);
+            workwnd.Draw();
         }
+
+        //wrefresh(workwnd.GetWindow());
         //else if (menu.active) {
         //    choice = wgetch(menu.GetWindow());
         //}
@@ -103,12 +102,12 @@ int main() {
         //    menu.WindowLoop(choice);
         //}
         //else {
-            workwnd.active = true;
+            //workwnd.active = true;
         //}
 
-        if(workwnd.active) {
-            workwnd.WindowLoop(choice);
-        }
+        //if(workwnd.active) {
+            //workwnd.WindowLoop(choice);
+        //}
 
         /*if (choice == ctrl('a')) {
             menu.active = true;
@@ -126,8 +125,6 @@ int main() {
         }
     }
 
-    //getch();
-    endwin();
     return 0;
 }
 

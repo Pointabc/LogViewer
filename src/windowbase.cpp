@@ -28,6 +28,5 @@ void WindowBase::Reset()
     if (_border) {
         box(_window, 0, 0);
     }
-    //wrefresh(_window);
 }
 

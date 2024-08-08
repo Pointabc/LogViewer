@@ -8,7 +8,7 @@ Console::Console()
 
 Console::~Console()
 {
-    //dtor
+    endwin();
 }
 
 void Console::start_ncurses(bool useRaw, bool useNoecho)
@@ -25,7 +25,6 @@ void Console::start_ncurses(bool useRaw, bool useNoecho)
     getyx(stdscr, _rc.row, _rc.col);
     getmaxyx(stdscr, _rc.nrows, _rc.ncols);
 
-
     // Hide cursor
     curs_set(0);
     cbreak();
@@ -36,8 +35,6 @@ void Console::start_ncurses(bool useRaw, bool useNoecho)
         init_pair(1,COLOR_WHITE,COLOR_BLUE);
         init_pair(2,COLOR_BLACK,COLOR_GREEN);
     }
-
-    // TODO Как узнать максимально возможные размеры терминала?
 }
 
 rect& Console::GetWindowRect()
