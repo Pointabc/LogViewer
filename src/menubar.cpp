@@ -23,7 +23,8 @@ Menubar::Menubar(WINDOW* window, const std::vector<MenuEx*>& menus, int num_menu
     int yMax, xMax, yBeg, xBeg;
     getmaxyx(_window, yMax, xMax);
     getbegyx(_window, yBeg, xBeg);
-    _submenu = newwin(yMax - 2, xMax - 2, yBeg + 1, xBeg + 1);
+    _submenu = newwin((yMax - 2) / 2, (xMax - 2) / 2, yBeg + 1, xBeg + 1);
+    //_submenu = newwin(5, 15, yBeg + 1, xBeg + 1);
     keypad(_submenu, true);
     wrefresh(_submenu);
 
@@ -48,11 +49,10 @@ void Menubar::DrawMenu(MenuEx menu, bool is_selected)
     }
     mvwprintw(_window, 0, menu._start_x, menu._text.c_str());
     wattroff(_window, A_STANDOUT);
-    //wrefresh(_window);
 
     int ch;
     DrawMenuItems(menu);
-    //wrefresh(_submenu);
+
     while(is_selected && (ch = wgetch(_submenu))) {
         switch (ch) {
             case KEY_DOWN:

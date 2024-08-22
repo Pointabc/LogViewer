@@ -55,16 +55,16 @@ int main() {
     Menubar menubar(workwnd.GetWindow(), menus, menus.size());
     menubar.Draw();
 
-    //workwnd.OpenFile("/home/oem/Projects/LogViewer/WIN-M1EHONCMIR3.WebServer.2024-04-14.log");
+    workwnd.OpenFile("/home/oem/Projects/LogViewer/WIN-M1EHONCMIR3.WebServer.2024-04-14.log");
     //workwnd.OpenFile("/home/oem/Projects/LogViewer/ntegrationService.CacheManager.2023-08-14.log");
-    workwnd.OpenFile("/home/oem/Projects/LogViewer/p-syngenta-rx-sungerowebserver.WebServer.CacheManager.2023-08-14.log");
+    //workwnd.OpenFile("/home/oem/Projects/LogViewer/p-syngenta-rx-sungerowebserver.WebServer.CacheManager.2023-08-14.log");
     workwnd.SetMenuBar(&menubar);
     workwnd.Draw();
     con.AddWindow(workwnd.GetWindow());
 
     // Loop of main menu
     while(1) {
-        // If console change size -> redraw
+        // If console changed size -> redraw
         int height, width;
         getmaxyx(stdscr, height, width);
         rect rc = con.GetWindowRect();
@@ -88,9 +88,10 @@ int main() {
         if (workwnd.active) {
             choice = wgetch(workwnd.GetWindow());
             menubar.handleTrigger(choice);
-            menubar.Draw();
             workwnd.WindowLoop(choice);
-            workwnd.Draw();
+            menubar.Draw();
+
+            //workwnd.Draw();
         }
 
         //wrefresh(workwnd.GetWindow());

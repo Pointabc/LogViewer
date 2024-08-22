@@ -30,9 +30,9 @@ void Window::Reset()
         wresize(_window, height - 2, width);
     }
 
-    //WindowBase::Reset();
     wbkgd(_window,COLOR_PAIR(1));
-    wrefresh(_window);
+    box(_window, 0, 0);
+    //wrefresh(_window);
 }
 
 void Window::OpenFile(std::string path)
@@ -58,7 +58,7 @@ void Window::Draw()
         _menubar->Draw();
     }*/
 
-    //this->Reset();
+    this->Reset();
     int height, width;
     getmaxyx(stdscr, height, width);
 
@@ -84,7 +84,7 @@ void Window::Draw()
         }
     }
 
-    wrefresh(_window);
+    //wrefresh(_window);
 }
 
 void Window::WindowLoop(int choice)

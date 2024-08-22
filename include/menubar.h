@@ -1,10 +1,10 @@
 #ifndef MENUBAR_H
 #define MENUBAR_H
 
-#include <windowbase.h>
+#include <ncurses.h>
 #include "menuex.h"
 
-class Menubar //: public WindowBase
+class Menubar
 {
     public:
         Menubar();
